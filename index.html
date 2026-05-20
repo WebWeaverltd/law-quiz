@@ -7,200 +7,51 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html { -webkit-text-size-adjust: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #0a0e1a;
-    color: #e8eaf0;
-    min-height: 100vh;
-    padding: 16px;
-    padding-bottom: 32px;
-    overflow-x: hidden;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0a0e1a; color: #e8eaf0; min-height: 100vh; padding: 16px; padding-bottom: 32px; overflow-x: hidden; }
   .container { max-width: 640px; margin: 0 auto; }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 16px;
-    background: #131829;
-    border-radius: 14px;
-    border: 1px solid #1f2640;
-  }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 16px; background: #131829; border-radius: 14px; border: 1px solid #1f2640; }
   .title { font-size: 18px; font-weight: 700; color: #22C55E; }
   .subtitle { font-size: 12px; color: #8b95b0; margin-top: 2px; }
-  .score {
-    text-align: right;
-    font-size: 13px;
-  }
+  .score { text-align: right; font-size: 13px; }
   .score-num { font-size: 22px; font-weight: 700; color: #22C55E; }
   .score-pct { font-size: 11px; color: #8b95b0; margin-top: 2px; }
-
-  .topic-chips {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 12px;
-    margin-bottom: 20px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
+  .topic-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .topic-chips::-webkit-scrollbar { display: none; }
-  .chip {
-    flex-shrink: 0;
-    padding: 10px 16px;
-    background: #131829;
-    border: 1px solid #1f2640;
-    border-radius: 22px;
-    color: #8b95b0;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.15s;
-  }
+  .chip { flex-shrink: 0; padding: 10px 16px; background: #131829; border: 1px solid #1f2640; border-radius: 22px; color: #8b95b0; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
   .chip.active { background: #22C55E; color: #0a0e1a; border-color: #22C55E; }
   .chip:active { transform: scale(0.96); }
-
-  .card {
-    background: #131829;
-    border-radius: 18px;
-    padding: 22px;
-    border: 1px solid #1f2640;
-    margin-bottom: 16px;
-  }
-  .topic-label {
-    display: inline-block;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 700;
-    color: #22C55E;
-    background: rgba(34, 197, 94, 0.1);
-    padding: 4px 10px;
-    border-radius: 6px;
-    margin-bottom: 14px;
-  }
-  .question {
-    font-size: 17px;
-    line-height: 1.5;
-    font-weight: 500;
-    margin-bottom: 22px;
-  }
-
+  .card { background: #131829; border-radius: 18px; padding: 22px; border: 1px solid #1f2640; margin-bottom: 16px; }
+  .topic-label { display: inline-block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; color: #22C55E; background: rgba(34, 197, 94, 0.1); padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; }
+  .topic-label.scenario { color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+  .question { font-size: 17px; line-height: 1.5; font-weight: 500; margin-bottom: 22px; }
   .options { display: flex; flex-direction: column; gap: 10px; }
-  .option {
-    background: #1a2138;
-    border: 1.5px solid #2a3252;
-    color: #e8eaf0;
-    padding: 16px 18px;
-    border-radius: 12px;
-    font-size: 15px;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.15s;
-    line-height: 1.4;
-    font-family: inherit;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .option { background: #1a2138; border: 1.5px solid #2a3252; color: #e8eaf0; padding: 16px 18px; border-radius: 12px; font-size: 15px; text-align: left; cursor: pointer; transition: all 0.15s; line-height: 1.4; font-family: inherit; width: 100%; display: flex; align-items: center; gap: 12px; }
   .option:active { transform: scale(0.98); }
   .option:hover { border-color: #4b5680; background: #212a48; }
   .option.correct { background: rgba(34, 197, 94, 0.15); border-color: #22C55E; color: #4ade80; }
   .option.wrong { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; color: #f87171; }
   .option.disabled { cursor: default; pointer-events: none; }
-  .option .letter {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: #2a3252;
-    font-weight: 700;
-    font-size: 13px;
-    flex-shrink: 0;
-  }
+  .option .letter { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: #2a3252; font-weight: 700; font-size: 13px; flex-shrink: 0; }
   .option.correct .letter { background: #22C55E; color: #0a0e1a; }
   .option.wrong .letter { background: #ef4444; color: #fff; }
-
-  .feedback {
-    margin-top: 16px;
-    padding: 14px 16px;
-    background: #0f1424;
-    border-radius: 10px;
-    border-left: 3px solid #22C55E;
-    font-size: 13.5px;
-    line-height: 1.5;
-    color: #b8c0d6;
-    display: none;
-  }
+  .feedback { margin-top: 16px; padding: 14px 16px; background: #0f1424; border-radius: 10px; border-left: 3px solid #22C55E; font-size: 13.5px; line-height: 1.5; color: #b8c0d6; display: none; }
   .feedback.show { display: block; }
   .feedback strong { color: #22C55E; }
   .feedback.wrong-feedback { border-left-color: #ef4444; }
   .feedback.wrong-feedback strong { color: #f87171; }
-
-  .next-btn {
-    display: block;
-    width: 100%;
-    background: #22C55E;
-    color: #0a0e1a;
-    border: none;
-    padding: 16px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 16px;
-    transition: all 0.15s;
-    font-family: inherit;
-  }
+  .next-btn { display: block; width: 100%; background: #22C55E; color: #0a0e1a; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 16px; transition: all 0.15s; font-family: inherit; }
   .next-btn:active { transform: scale(0.98); background: #16a34a; }
   .next-btn:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .stat {
-    background: #131829;
-    border: 1px solid #1f2640;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-  }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .stat { background: #131829; border: 1px solid #1f2640; border-radius: 10px; padding: 10px; text-align: center; }
   .stat-num { font-size: 18px; font-weight: 700; color: #e8eaf0; }
   .stat-label { font-size: 10px; color: #8b95b0; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.4px; }
   .stat.green .stat-num { color: #22C55E; }
   .stat.red .stat-num { color: #f87171; }
-
-  .footer-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .reset-btn {
-    flex: 1;
-    background: transparent;
-    border: 1px solid #2a3252;
-    color: #8b95b0;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 12px;
-    cursor: pointer;
-    font-family: inherit;
-  }
+  .footer-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .reset-btn { flex: 1; background: transparent; border: 1px solid #2a3252; color: #8b95b0; padding: 10px; border-radius: 10px; font-size: 12px; cursor: pointer; font-family: inherit; }
   .reset-btn:active { background: #1a2138; }
-
-  .complete {
-    text-align: center;
-    padding: 40px 20px;
-  }
+  .complete { text-align: center; padding: 40px 20px; }
   .complete h2 { color: #22C55E; font-size: 24px; margin-bottom: 12px; }
   .complete p { color: #b8c0d6; margin-bottom: 8px; }
   .complete .big-num { font-size: 48px; font-weight: 800; color: #22C55E; margin: 16px 0; }
@@ -210,239 +61,159 @@
 <div class="container">
   <header>
     <div>
-      <div class="title">📚 Isaac's Law Cram</div>
-      <div class="subtitle">Mid-set drills — Exam Thu 21 May</div>
+      <div class="title">Isaac's Law Cram</div>
+      <div class="subtitle">Exam Thu 21 May - 114 questions</div>
     </div>
     <div class="score">
       <div class="score-num" id="scoreNum">0/0</div>
-      <div class="score-pct" id="scorePct">—</div>
+      <div class="score-pct" id="scorePct">-</div>
     </div>
   </header>
-
   <div class="topic-chips" id="topicChips"></div>
   <div id="quizArea"></div>
-
   <div class="stats">
     <div class="stat green"><div class="stat-num" id="streakNum">0</div><div class="stat-label">Streak</div></div>
     <div class="stat"><div class="stat-num" id="seenNum">0</div><div class="stat-label">Seen</div></div>
     <div class="stat red"><div class="stat-num" id="missedNum">0</div><div class="stat-label">Missed</div></div>
   </div>
-
   <div class="footer-actions">
     <button class="reset-btn" onclick="resetSession()">Reset Session</button>
     <button class="reset-btn" onclick="reshuffleQueue()">Shuffle</button>
   </div>
 </div>
-
 <script>
 const QUESTIONS = [
-  // EMPLOYMENT LAW
   { topic:"Employment", q:"What is the main piece of legislation governing employment in Northern Ireland?", options:["Employment Rights Act 1996","Employment Rights (Northern Ireland) Order 1996","The Equality Act 2010","The Companies Act 2006"], correct:1, exp:"NI uses the (NI) Order 1996. Always cite the NI version on your paper." },
   { topic:"Employment", q:"Within how many months of starting must an employer provide a statement of particulars?", options:["1 month","2 months","3 months","6 months"], correct:1, exp:"2 months from start date. Required under the (NI) Order 1996." },
   { topic:"Employment", q:"Minimum continuous service required to claim UNFAIR dismissal?", options:["6 months","1 year","2 years","No requirement"], correct:1, exp:"1 year continuous employment for unfair dismissal. WRONGFUL dismissal has no service requirement." },
   { topic:"Employment", q:"Tom uses his own laptop, invoices per job, sets his own hours. He is most likely:", options:["An employee","An independent contractor","A casual worker","A director"], correct:1, exp:"All 3 indicators (own tools, financial risk via invoicing, control over hours) point to IC, not employee." },
-  { topic:"Employment", q:"A contract OF service means:", options:["Employee","Independent contractor","Agency worker","Apprentice"], correct:0, exp:"Contract OF service = employee. Contract FOR services = IC. Easy to mix up — memorise this." },
-  { topic:"Employment", q:"Which is NOT an automatically unfair ground for dismissal?", options:["Pregnancy","Whistleblowing","Capability","Jury duty"], correct:2, exp:"Capability is potentially FAIR (e.g. James v Waltham Holy Cross). Pregnancy, whistleblowing, jury duty are auto-unfair." },
-  { topic:"Employment", q:"Time limit to bring an unfair dismissal claim:", options:["3 months","6 months","1 year","6 years"], correct:0, exp:"3 months from date of dismissal. Wrongful dismissal = 6 years (it's a breach of contract claim)." },
-  { topic:"Employment", q:"The two main types of misconduct dismissal are:", options:["Petty and serious","Gross and continuous","Minor and major","Direct and indirect"], correct:1, exp:"GROSS misconduct (one-off, instant dismissal after fair process) vs CONTINUOUS misconduct (warning system applies)." },
-  { topic:"Employment", q:"The warning system for continuous misconduct runs in this order:", options:["Written then Verbal then Final then Dismiss","Verbal then Written then Final Written then Dismiss","Final then Written then Verbal then Dismiss","One warning then dismiss"], correct:1, exp:"Verbal -> Written -> Final Written -> Dismissal. Skipping a step = potentially unfair dismissal claim." },
+  { topic:"Employment", q:"A contract OF service means:", options:["Employee","Independent contractor","Agency worker","Apprentice"], correct:0, exp:"Contract OF service = employee. Contract FOR services = IC." },
+  { topic:"Employment", q:"Which is NOT an automatically unfair ground for dismissal?", options:["Pregnancy","Whistleblowing","Capability","Jury duty"], correct:2, exp:"Capability is potentially FAIR. Pregnancy, whistleblowing, jury duty are auto-unfair." },
+  { topic:"Employment", q:"Time limit to bring an unfair dismissal claim:", options:["3 months","6 months","1 year","6 years"], correct:0, exp:"3 months from date of dismissal. Wrongful dismissal = 6 years." },
+  { topic:"Employment", q:"The two main types of misconduct dismissal are:", options:["Petty and serious","Gross and continuous","Minor and major","Direct and indirect"], correct:1, exp:"GROSS misconduct (one-off, instant after fair process) vs CONTINUOUS misconduct (warning system)." },
+  { topic:"Employment", q:"The warning system for continuous misconduct runs in this order:", options:["Written then Verbal then Final then Dismiss","Verbal then Written then Final Written then Dismiss","Final then Written then Verbal then Dismiss","One warning then dismiss"], correct:1, exp:"Verbal -> Written -> Final Written -> Dismissal." },
   { topic:"Employment", q:"Minimum service to be entitled to a redundancy payment:", options:["6 months","1 year","2 years","5 years"], correct:2, exp:"2 years continuous employment for redundancy pay eligibility." },
-  { topic:"Employment", q:"When 100+ employees are being made redundant, consultation must occur at least:", options:["30 days in advance","45 days in advance","90 days in advance","6 months in advance"], correct:2, exp:"90 days before the first dismissal. Memory hook: '100 people = 90 days'." },
+  { topic:"Employment", q:"When 100+ employees are being made redundant, consultation must occur at least:", options:["30 days in advance","45 days in advance","90 days in advance","6 months in advance"], correct:2, exp:"90 days before the first dismissal. '100 people = 90 days'." },
   { topic:"Employment", q:"Redundancy pay for a 25-year-old employee, per year of service:", options:["Half week's wages","1 week's wages","1.5 weeks' wages","2 weeks' wages"], correct:1, exp:"Under 21 = half week, 21-41 = 1 week, 42+ = 1.5 weeks. Cap: 20 years' service, GBP400/wk max." },
-  { topic:"Employment", q:"Lottie was dismissed yesterday without notice (her contract entitled her to 4 weeks' notice). She has worked there 8 months. Her best claim is:", options:["Unfair dismissal","Wrongful dismissal","Constructive dismissal","Redundancy"], correct:1, exp:"Wrongful (no notice as per contract). Doesn't need 1 year service (unlike unfair). She wasn't forced to leave (so not constructive)." },
-  { topic:"Employment", q:"Three remedies for unfair dismissal are:", options:["Refund, Reissue, Resign","Reinstatement, Re-engagement, Compensation","Reduction, Restoration, Recovery","Removal, Return, Reissue"], correct:1, exp:"R-R-C: Reinstatement (same role), Re-engagement (different role), Compensation (money)." },
-
-  // DATA PROTECTION
-  { topic:"Data Protection", q:"GDPR stands for:", options:["General Data Privacy Regulation","General Data Protection Regulation","Government Data Protocol Rules","Global Digital Protection Rules"], correct:1, exp:"General Data Protection Regulation. The headline piece of legislation to cite." },
-  { topic:"Data Protection", q:"The maximum civil penalty the ICO can impose on a Data Controller is:", options:["GBP100,000","GBP250,000","GBP500,000","GBP1,000,000"], correct:2, exp:"GBP500,000 max. Requires 3 conditions (SSD): Serious violation, Substantial damage/stress, Deliberate or knew/should have known." },
+  { topic:"Employment", q:"Lottie was dismissed yesterday without notice (entitled to 4 weeks). She has 8 months service. Best claim:", options:["Unfair dismissal","Wrongful dismissal","Constructive dismissal","Redundancy"], correct:1, exp:"Wrongful (no notice as per contract). Doesn't need 1 year service. She wasn't forced to leave." },
+  { topic:"Employment", q:"Three remedies for unfair dismissal are:", options:["Refund, Reissue, Resign","Reinstatement, Re-engagement, Compensation","Reduction, Restoration, Recovery","Removal, Return, Reissue"], correct:1, exp:"R-R-C: Reinstatement, Re-engagement, Compensation." },
+  { topic:"Data Protection", q:"GDPR stands for:", options:["General Data Privacy Regulation","General Data Protection Regulation","Government Data Protocol Rules","Global Digital Protection Rules"], correct:1, exp:"General Data Protection Regulation." },
+  { topic:"Data Protection", q:"The maximum civil penalty the ICO can impose on a Data Controller is:", options:["GBP100,000","GBP250,000","GBP500,000","GBP1,000,000"], correct:2, exp:"GBP500,000 max. SSD conditions: Serious, Substantial, Deliberate." },
   { topic:"Data Protection", q:"Which is NOT one of the 3 conditions for the GBP500k ICO civil penalty?", options:["Serious violation of principles","Substantial damage or stress","Deliberate or should have known","Financial loss to the data subject"], correct:3, exp:"SSD: Serious + Substantial + Deliberate. Financial loss is not a stated condition." },
-  { topic:"Data Protection", q:"Which is NOT one of the 4 types of ICO notice?", options:["Information notice","Assessment notice","Enforcement notice","Compliance notice"], correct:3, exp:"4 types are: Information, Assessment, Enforcement, Penalty. Mnemonic: I-A-E-P." },
-  { topic:"Data Protection", q:"The 'right to be forgotten' falls under which data subject right?", options:["Right to information","Right to erasure","Right to portability","Right to object"], correct:1, exp:"Right to erasure = right to be forgotten / de-listed. Allows deletion of data where appropriate." },
-  { topic:"Data Protection", q:"A 'Data Controller' is:", options:["The individual whose data is held","The party deciding the PURPOSE and MANNER of processing","Anyone who handles data","The ICO regulator"], correct:1, exp:"Controller decides WHY and HOW data is processed. Processor processes ON BEHALF of controller. Subject is the individual." },
-  { topic:"Data Protection", q:"Which counts as 'sensitive data'?", options:["Name and address","Bank account details","Trade union membership","Email addresses"], correct:2, exp:"Sensitive = trade union membership, political opinions, racial/ethnic origin. Extra protections apply." },
-  { topic:"Data Protection", q:"If your data subject rights have been breached, the FIRST step is to:", options:["Sue the data controller","Lodge a complaint with the ICO","Apply to the High Court","Contact your local council"], correct:1, exp:"Lodge complaint with ICO. Then there's a right to effective judicial remedy against the ICO's decision." },
-  { topic:"Data Protection", q:"Which is NOT an obligation on a Data Controller?", options:["Process data fairly","Keep data accurate and up to date","Retain data indefinitely","Protect against unauthorised processing"], correct:2, exp:"OPPOSITE - controllers must retain data NO LONGER than necessary. Indefinite retention breaches GDPR." },
-  { topic:"Data Protection", q:"Data must not be transferred outside of:", options:["The UK","England and Wales","The EEC without adequate controls","Northern Ireland"], correct:2, exp:"Outside the EEC requires adequate levels of data protection in the receiving area." },
-
-  // BUSINESS ORGANISATIONS
-  { topic:"Business Orgs", q:"Ordinary partnerships are governed by:", options:["Companies Act 2006","Partnership Act 1890","Limited Liability Partnership Act 2000","Limited Partnerships Act 1907"], correct:1, exp:"Partnership Act 1890 for general/ordinary partnerships. LP Act 1907 for Limited Partnerships, LLP Act 2000 for LLPs." },
-  { topic:"Business Orgs", q:"True or False: A sole trader is NOT permitted to hire employees.", options:["True","False"], correct:1, exp:"FALSE. 'Sole' refers to sole ownership, not solo working. A sole trader can absolutely employ staff." },
-  { topic:"Business Orgs", q:"Minimum share capital required to form a public company:", options:["No minimum","GBP10,000","GBP50,000","GBP100,000"], correct:2, exp:"GBP50,000 minimum, of which at least 1/4 (GBP12,500) must be paid up to commence trading." },
-  { topic:"Business Orgs", q:"A public company must hold its AGM within how long of its financial year end?", options:["3 months","6 months","9 months","12 months"], correct:1, exp:"6 months for public companies. Private companies are NOT required to hold an AGM at all." },
-  { topic:"Business Orgs", q:"Which company type can list shares on the stock exchange?", options:["Public only","Private only","Both public and private","Neither"], correct:0, exp:"Public only. Private companies are forbidden from offering shares to the general public." },
-  { topic:"Business Orgs", q:"A sleeping partner has what liability?", options:["Limited","Unlimited","None","Joint and several only"], correct:1, exp:"Unlimited liability - same as general partners. They've invested capital but liability is not capped." },
-  { topic:"Business Orgs", q:"Limited liability partners can only exist in:", options:["Any partnership","Ordinary partnerships","A Limited Partnership or LLP","A sole trade"], correct:2, exp:"Limited liability partners ONLY exist in LPs (1907 Act) or LLPs (2000 Act). Never in an ordinary partnership." },
-  { topic:"Business Orgs", q:"Which feature is COMMON to both sole traders and partnerships?", options:["Separate legal entity status","Governed by specific legislation","Unlimited liability","Annual accounts filing"], correct:2, exp:"Both have unlimited liability AND are not separate legal entities. Owners ARE the business." },
-  { topic:"Business Orgs", q:"Filing deadline for a PUBLIC company's annual accounts:", options:["3 months after ARD","6 months after ARD","9 months after ARD","12 months after ARD"], correct:1, exp:"Public = 6 months (more regulated). Private = 9 months. Memory: '6 for Public, 9 for Private'." },
+  { topic:"Data Protection", q:"Which is NOT one of the 4 types of ICO notice?", options:["Information notice","Assessment notice","Enforcement notice","Compliance notice"], correct:3, exp:"4 types: Information, Assessment, Enforcement, Penalty. Mnemonic: I-A-E-P." },
+  { topic:"Data Protection", q:"The 'right to be forgotten' falls under which data subject right?", options:["Right to information","Right to erasure","Right to portability","Right to object"], correct:1, exp:"Right to erasure = right to be forgotten." },
+  { topic:"Data Protection", q:"A 'Data Controller' is:", options:["The individual whose data is held","The party deciding the PURPOSE and MANNER of processing","Anyone who handles data","The ICO regulator"], correct:1, exp:"Controller decides WHY and HOW. Processor processes ON BEHALF. Subject is the individual." },
+  { topic:"Data Protection", q:"Which counts as 'sensitive data'?", options:["Name and address","Bank account details","Trade union membership","Email addresses"], correct:2, exp:"Sensitive = trade union, political opinions, racial/ethnic origin." },
+  { topic:"Data Protection", q:"If your data subject rights have been breached, the FIRST step is to:", options:["Sue the data controller","Lodge a complaint with the ICO","Apply to the High Court","Contact your local council"], correct:1, exp:"Lodge complaint with ICO. Then judicial remedy if needed." },
+  { topic:"Data Protection", q:"Which is NOT an obligation on a Data Controller?", options:["Process data fairly","Keep data accurate and up to date","Retain data indefinitely","Protect against unauthorised processing"], correct:2, exp:"Controllers must retain NO LONGER than necessary." },
+  { topic:"Data Protection", q:"Data must not be transferred outside of:", options:["The UK","England and Wales","The EEC without adequate controls","Northern Ireland"], correct:2, exp:"Outside the EEC requires adequate levels of data protection." },
+  { topic:"Business Orgs", q:"Ordinary partnerships are governed by:", options:["Companies Act 2006","Partnership Act 1890","Limited Liability Partnership Act 2000","Limited Partnerships Act 1907"], correct:1, exp:"Partnership Act 1890. LP Act 1907 for Limited Partnerships, LLP Act 2000 for LLPs." },
+  { topic:"Business Orgs", q:"True or False: A sole trader is NOT permitted to hire employees.", options:["True","False"], correct:1, exp:"FALSE. 'Sole' = sole ownership, not solo working." },
+  { topic:"Business Orgs", q:"Minimum share capital required to form a public company:", options:["No minimum","GBP10,000","GBP50,000","GBP100,000"], correct:2, exp:"GBP50,000 minimum, 1/4 paid up = GBP12,500 to commence trading." },
+  { topic:"Business Orgs", q:"A public company must hold its AGM within how long of its financial year end?", options:["3 months","6 months","9 months","12 months"], correct:1, exp:"6 months for public companies. Private companies don't need an AGM." },
+  { topic:"Business Orgs", q:"Which company type can list shares on the stock exchange?", options:["Public only","Private only","Both public and private","Neither"], correct:0, exp:"Public only. Private companies are forbidden from offering shares to the public." },
+  { topic:"Business Orgs", q:"A sleeping partner has what liability?", options:["Limited","Unlimited","None","Joint and several only"], correct:1, exp:"Unlimited liability - same as general partners." },
+  { topic:"Business Orgs", q:"Limited liability partners can only exist in:", options:["Any partnership","Ordinary partnerships","A Limited Partnership or LLP","A sole trade"], correct:2, exp:"Only in LPs (1907 Act) or LLPs (2000 Act). Never in an ordinary partnership." },
+  { topic:"Business Orgs", q:"Which feature is COMMON to both sole traders and partnerships?", options:["Separate legal entity status","Governed by specific legislation","Unlimited liability","Annual accounts filing"], correct:2, exp:"Both have unlimited liability AND are not separate legal entities." },
+  { topic:"Business Orgs", q:"Filing deadline for a PUBLIC company's annual accounts:", options:["3 months after ARD","6 months after ARD","9 months after ARD","12 months after ARD"], correct:1, exp:"Public = 6 months. Private = 9 months. '6 for Public, 9 for Private'." },
   { topic:"Business Orgs", q:"Minimum number of directors for a private company:", options:["1","2","3","No minimum"], correct:0, exp:"1 director for private. 2 for public. Both need at least 1 member." },
-
-  // COMPANY DIRECTORS
   { topic:"Directors", q:"Minimum age to be appointed a company director:", options:["18","16","21","No minimum"], correct:1, exp:"16 years old under Companies Act 2006." },
-  { topic:"Directors", q:"First directors are appointed:", options:["At the first AGM","By shareholders at incorporation","In the application for registration","After 1 year of trading"], correct:2, exp:"In the application for registration; effective on incorporation. Common trap - many candidates wrongly say 'at first AGM'." },
-  { topic:"Directors", q:"Disqualification orders are made by:", options:["Companies House","The Magistrates' Court","The High Court","The ICO"], correct:2, exp:"High Court, under the Company Directors Disqualification (NI) Order 2002 (CDDO 2002)." },
-  { topic:"Directors", q:"Maximum disqualification period for an unfit director of an insolvent company:", options:["5 years","10 years","15 years","Life"], correct:2, exp:"Minimum 2 years, maximum 15 years. Common exam fact." },
-  { topic:"Directors", q:"A 'shadow director' is best defined as:", options:["A non-executive director","Someone replacing a deceased director","A person on whose directions the board acts","An undisclosed beneficial shareholder"], correct:2, exp:"Shadow director = person whose directions the board is accustomed to act on. Controls from behind the scenes." },
-  { topic:"Directors", q:"Which is NOT a statutory duty of a director under Companies Act 2006?", options:["Act within powers","Promote the success of the company","Maximise dividend payments","Avoid conflicts of interest"], correct:2, exp:"Maximising dividends is NOT a statutory duty. The duty is to promote the success of the company (long-term, considering all stakeholders)." },
-  { topic:"Directors", q:"Public company directors typically retire on rotation every:", options:["1 year","3 years","5 years","10 years"], correct:1, exp:"3-year cycle (yearly for FTSE 350). Purpose: directors know they're accountable to shareholders." },
-  { topic:"Directors", q:"To remove a director from office, you need:", options:["A special resolution (75%)","An ordinary resolution with special notice (28 days)","A court order","Unanimous board agreement"], correct:1, exp:"Ordinary resolution (51%) + 28 days special notice. Director has right to make written representations." },
-  { topic:"Directors", q:"Which is NOT a ground for director disqualification?", options:["General misconduct","Unfitness when company became insolvent","Wrongful trading","Failure to attend AGMs"], correct:3, exp:"Failure to attend AGMs is not a ground. The 3 main grounds: misconduct, unfitness, other (wrongful trading, bankruptcy, failure to pay)." },
-  { topic:"Directors", q:"The 5 types of director include all of these EXCEPT:", options:["Executive director","Non-executive director","Shadow director","Reserve director"], correct:3, exp:"5 types: Executive, Non-executive, De facto, Shadow, Managing director. 'Reserve' isn't recognised." },
-
-  // AUDITORS & SECRETARY
-  { topic:"Auditors", q:"The FIRST auditor of a company is appointed by:", options:["Shareholders at the AGM","The directors","Companies House","The Registrar of Companies"], correct:1, exp:"Directors appoint the FIRST auditor. Subsequent auditors are appointed by shareholders by ordinary resolution at AGM." },
-  { topic:"Auditors", q:"An auditor is removed from office by:", options:["Ordinary resolution with special notice","Special resolution","Director vote alone","Court order only"], correct:0, exp:"Ordinary resolution + 28-day special notice. Same mechanism as removing a director." },
-  { topic:"Auditors", q:"A public limited company MUST have a:", options:["Bookkeeper","Compliance officer","Qualified company secretary","Internal auditor"], correct:2, exp:"Public co MUST have a qualified company secretary (e.g. Chartered Accountants Ireland member). Private co is NOT required to have one." },
-  { topic:"Auditors", q:"A company is registered on 10 May 2024. Its first Accounting Reference Date (ARD) is:", options:["10 May 2025","30 April 2025","31 May 2025","31 December 2024"], correct:2, exp:"ARD = anniversary of the LAST DAY of the MONTH of incorporation. May -> 31 May 2025." },
-  { topic:"Auditors", q:"Filing deadline for a PRIVATE company's accounts after ARD:", options:["3 months","6 months","9 months","12 months"], correct:2, exp:"Private = 9 months. Public = 6 months. Mnemonic: '9 for Private, 6 for Public'." },
-  { topic:"Auditors", q:"A small private company is exempt from audit if turnover does NOT exceed:", options:["GBP1m","GBP2.8m","GBP5.6m","GBP10m"], correct:2, exp:"Turnover <= GBP5.6m AND balance sheet <= GBP2.8m. Both thresholds must be met. Dormant companies also exempt." },
-  { topic:"Auditors", q:"Which is NOT a right of a statutory auditor?", options:["Right of access to books and accounts","Right to require information from employees","Right to recommend business strategy","Right to speak at general meetings"], correct:2, exp:"Auditors check accounts - they don't have a right to recommend strategy. That's a directors' responsibility." },
-  { topic:"Auditors", q:"Which is NOT a duty of the company secretary in relation to meetings?", options:["Arrange Board meetings","Provide due notice of GMs","Take and produce minutes","Vote on resolutions"], correct:3, exp:"Sec doesn't vote - secretary administers. Voting is for members and directors." },
-  { topic:"Auditors", q:"A PRIVATE company must preserve its accounting records for:", options:["1 year","3 years","6 years","10 years"], correct:1, exp:"Private = 3 years. Public = 6 years. Failure to keep records = offence, up to 2 years prison and/or fine." },
-
-  // KEY ACTS QUIZ (recognition reflex)
-  { topic:"Key Acts", q:"Companies in the UK are governed by the:", options:["Company Law Act 2010","Companies Act 2006","Corporations Act 1985","Companies (NI) Order 2000"], correct:1, exp:"Companies Act 2006 - drop this into any company law answer for an easy mark." },
-  { topic:"Key Acts", q:"Director disqualification in NI is governed by:", options:["Company Directors Disqualification Act 1986","Insolvency (NI) Order 1989","Company Directors Disqualification (NI) Order 2002","Companies Act 2006"], correct:2, exp:"CDDO (NI) 2002. The NI version." },
-  { topic:"Key Acts", q:"Insider dealing is criminalised under:", options:["Companies Act 2006","Criminal Justice Act 1993 (as updated by Market Abuse Regulation 2016)","Theft Act 1968","Fraud Act 2006"], correct:1, exp:"CJA 1993 s.52 as updated by MAR 2016. Three offences: dealing, encouraging dealing, disclosing." },
-  { topic:"Key Acts", q:"Maximum criminal sanction for insider dealing on indictment:", options:["5 years","7 years","10 years","Unlimited"], correct:2, exp:"Up to 10 years imprisonment AND/OR an unlimited fine on indictment." },
-  { topic:"Key Acts", q:"Consumer protection in the UK is largely governed by:", options:["Sale of Goods Act 1979","Consumer Rights Act 2015","Trade Descriptions Act 1968","Supply of Goods Act 1982"], correct:1, exp:"Consumer Rights Act 2015 (3 parts: goods/digital/services + unfair terms + enforcement)." },
-  { topic:"Key Acts", q:"Donoghue v Stevenson (1932) established:", options:["The contra proferentem rule","The duty of care and neighbour principle","The postal rule","Implied terms in contracts"], correct:1, exp:"Donoghue v Stevenson = snail in ginger beer. Established duty of care and the 'neighbour principle' for negligence." },
+  { topic:"Directors", q:"First directors are appointed:", options:["At the first AGM","By shareholders at incorporation","In the application for registration","After 1 year of trading"], correct:2, exp:"In the application for registration; effective on incorporation." },
+  { topic:"Directors", q:"Disqualification orders are made by:", options:["Companies House","The Magistrates' Court","The High Court","The ICO"], correct:2, exp:"High Court, under CDDO (NI) 2002." },
+  { topic:"Directors", q:"Maximum disqualification period for an unfit director of an insolvent company:", options:["5 years","10 years","15 years","Life"], correct:2, exp:"Min 2, max 15 years." },
+  { topic:"Directors", q:"A 'shadow director' is best defined as:", options:["A non-executive director","Someone replacing a deceased director","A person on whose directions the board acts","An undisclosed beneficial shareholder"], correct:2, exp:"Shadow director controls from behind the scenes." },
+  { topic:"Directors", q:"Which is NOT a statutory duty of a director under Companies Act 2006?", options:["Act within powers","Promote the success of the company","Maximise dividend payments","Avoid conflicts of interest"], correct:2, exp:"Maximising dividends is NOT a statutory duty. Promote success (long-term) is." },
+  { topic:"Directors", q:"Public company directors typically retire on rotation every:", options:["1 year","3 years","5 years","10 years"], correct:1, exp:"3-year cycle (yearly for FTSE 350)." },
+  { topic:"Directors", q:"To REMOVE a director from office, you need:", options:["A special resolution (75%)","An ordinary resolution with special notice (28 days)","A court order","Unanimous board agreement"], correct:1, exp:"Ordinary resolution (51%) + 28 days special notice. NOT disqualification - different process." },
+  { topic:"Directors", q:"Which is NOT a ground for director DISQUALIFICATION?", options:["General misconduct","Unfitness when company became insolvent","Wrongful trading","Poor performance / low productivity"], correct:3, exp:"Poor performance is NOT a disqualification ground. MUFFI: Misconduct, Unfitness, Fraud, Failure to pay, Insolvent (bankrupt)." },
+  { topic:"Directors", q:"The 5 types of director include all of these EXCEPT:", options:["Executive director","Non-executive director","Shadow director","Reserve director"], correct:3, exp:"5 types: Executive, Non-executive, De facto, Shadow, Managing director." },
+  { topic:"Directors", q:"REMOVAL vs DISQUALIFICATION - which is correct?", options:["Both done by court order","Both done by ordinary resolution","Removal = company vote, Disqualification = court order","Removal = court order, Disqualification = company vote"], correct:2, exp:"REMOVAL = company shareholders vote (51%, 28 day notice). DISQUALIFICATION = court order (2-15 years, ban from any company)." },
+  { topic:"Directors", q:"Boston Deep Sea Fishing v Ansell (1888) established which director duty?", options:["Duty to act within powers","Duty to avoid conflicts of interest","Duty to disclose interest","Duty to exercise independent judgement"], correct:1, exp:"Director took secret commission - held liable to pay company the profit. Duty to avoid conflicts of interest." },
+  { topic:"Auditors", q:"The FIRST auditor of a company is appointed by:", options:["Shareholders at the AGM","The directors","Companies House","The Registrar of Companies"], correct:1, exp:"Directors appoint FIRST. Subsequent auditors by shareholders by ordinary resolution at AGM." },
+  { topic:"Auditors", q:"An auditor is removed from office by:", options:["Ordinary resolution with special notice","Special resolution","Director vote alone","Court order only"], correct:0, exp:"Ordinary resolution + 28-day special notice." },
+  { topic:"Auditors", q:"A public limited company MUST have a:", options:["Bookkeeper","Compliance officer","Qualified company secretary","Internal auditor"], correct:2, exp:"Public co MUST have a qualified company secretary. Private co not required." },
+  { topic:"Auditors", q:"A company is registered on 10 May 2024. Its first ARD is:", options:["10 May 2025","30 April 2025","31 May 2025","31 December 2024"], correct:2, exp:"ARD = anniversary of LAST DAY of MONTH of incorporation. May -> 31 May 2025." },
+  { topic:"Auditors", q:"Filing deadline for a PRIVATE company's accounts after ARD:", options:["3 months","6 months","9 months","12 months"], correct:2, exp:"Private = 9 months. Public = 6 months." },
+  { topic:"Auditors", q:"A small private company is exempt from audit if turnover does NOT exceed:", options:["GBP1m","GBP2.8m","GBP5.6m","GBP10m"], correct:2, exp:"Turnover <= GBP5.6m AND balance sheet <= GBP2.8m. Dormant companies also exempt." },
+  { topic:"Auditors", q:"Which is NOT a right of a statutory auditor?", options:["Right of access to books and accounts","Right to require information from employees","Right to recommend business strategy","Right to speak at general meetings"], correct:2, exp:"Auditors check accounts - they don't recommend strategy. That's a directors' job." },
+  { topic:"Auditors", q:"Which is NOT a duty of the company secretary in relation to meetings?", options:["Arrange Board meetings","Provide due notice of GMs","Take and produce minutes","Vote on resolutions"], correct:3, exp:"Sec doesn't vote - secretary administers." },
+  { topic:"Auditors", q:"A PRIVATE company must preserve its accounting records for:", options:["1 year","3 years","6 years","10 years"], correct:1, exp:"Private = 3 years. Public = 6 years." },
+  { topic:"Key Acts", q:"Companies in the UK are governed by the:", options:["Company Law Act 2010","Companies Act 2006","Corporations Act 1985","Companies (NI) Order 2000"], correct:1, exp:"Companies Act 2006." },
+  { topic:"Key Acts", q:"Director disqualification in NI is governed by:", options:["Company Directors Disqualification Act 1986","Insolvency (NI) Order 1989","Company Directors Disqualification (NI) Order 2002","Companies Act 2006"], correct:2, exp:"CDDO (NI) 2002." },
+  { topic:"Key Acts", q:"Insider dealing is criminalised under:", options:["Companies Act 2006","Criminal Justice Act 1993 (as updated by Market Abuse Regulation 2016)","Theft Act 1968","Fraud Act 2006"], correct:1, exp:"CJA 1993 s.52 as updated by MAR 2016." },
+  { topic:"Key Acts", q:"Maximum criminal sanction for insider dealing on indictment:", options:["5 years","7 years","10 years","Unlimited"], correct:2, exp:"Up to 10 years imprisonment AND/OR unlimited fine on indictment." },
+  { topic:"Key Acts", q:"Consumer protection in the UK is largely governed by:", options:["Sale of Goods Act 1979","Consumer Rights Act 2015","Trade Descriptions Act 1968","Supply of Goods Act 1982"], correct:1, exp:"Consumer Rights Act 2015 (3 parts: goods/digital/services, unfair terms, enforcement)." },
+  { topic:"Key Acts", q:"Donoghue v Stevenson (1932) established:", options:["The contra proferentem rule","The duty of care and neighbour principle","The postal rule","Implied terms in contracts"], correct:1, exp:"Snail in ginger beer. Established duty of care and neighbour principle for negligence." },
   { topic:"Key Acts", q:"Caparo v Dickman (1990) established a 3-stage test for:", options:["Breach of contract","Duty of care","Vicarious liability","Remoteness of damage"], correct:1, exp:"Caparo test: (1) reasonable foreseeability, (2) proximity, (3) fair, just and reasonable to impose duty." },
+  { topic:"Partner/Agency", q:"Hamlyn v Houston (1903) established that partners are liable for torts on what basis?", options:["Joint liability only","Joint AND several liability","No liability","Limited liability"], correct:1, exp:"Partner bribed competitor's clerk - ALL partners held jointly AND severally liable as in ordinary course of business." },
+  { topic:"Partner/Agency", q:"A new partner joining a firm is liable for debts incurred BEFORE they joined?", options:["Yes, fully liable","Yes, partially liable","No, not liable","Only if they agree in writing"], correct:2, exp:"New partners are NOT liable for debts incurred before they joined. Liability starts from joining date." },
+  { topic:"Partner/Agency", q:"A retiring partner can be indemnified against firm debts by means of:", options:["A novation contract","A statutory declaration","An ordinary resolution","A trust deed"], correct:0, exp:"Contract of novation. They must also give notice to creditors." },
+  { topic:"Partner/Agency", q:"Partners are jointly AND severally liable for:", options:["Contracts","Torts","Both contracts and torts","Neither"], correct:1, exp:"Joint AND several = TORTS. Joint only = contracts. Common exam trap." },
+  { topic:"Partner/Agency", q:"Which is NOT a way to create an agency relationship?", options:["Agreement (express or implied)","Ratification","Estoppel / Apparent authority","Statutory imposition"], correct:3, exp:"Agency arises by: Agreement, Ratification, Estoppel/Apparent, Necessity. Not by statutory imposition." },
+  { topic:"Partner/Agency", q:"For ratification to be valid, the principal must have:", options:["Existed at the time the contract was made","Been over 18","Filed accounts","Received payment first"], correct:0, exp:"Principal must have EXISTED at time of contract (Kelner v Baxter - company didn't exist yet, no valid ratification)." },
+  { topic:"Partner/Agency", q:"An agent acting WITHIN their actual or apparent authority is:", options:["Personally liable to the 3rd party","Liable to the principal only","NOT personally liable - only the principal is bound","Liable for breach of warranty of authority"], correct:2, exp:"Within authority = agent not personally liable. Outside authority = liable to 3rd party for breach of warranty of authority." },
+  { topic:"Partner/Agency", q:"Bolton Partners v Lambert (1888) - the court held that ratification within how long was reasonable?", options:["24 hours","2 weeks","3 months","6 months"], correct:1, exp:"2 weeks held to be a reasonable period for ratification." },
+  { topic:"Partner/Agency", q:"Which of these is NOT a duty owed by an agent to a principal?", options:["Duty to obey instructions","Duty to make a profit for the company","Duty to act with skill and care","Duty not to make a secret profit"], correct:1, exp:"Agent duty is to NOT make a SECRET profit - they don't have a duty to make profit for the company. That's a director duty." },
+  { topic:"Partner/Agency", q:"Necessity agency requires:", options:["Genuine emergency, can't reach principal, acting in best interests","Written agreement","Payment from principal","Court approval"], correct:0, exp:"3 conditions: (1) genuine emergency, (2) can't reach principal, (3) acting in principal's best interests." },
+  { topic:"Partner/Agency", q:"Which is NOT a method of terminating an agency?", options:["By consent of both parties","By completion of the purpose","By unilateral resignation of the agent","By bankruptcy of the 3rd party"], correct:3, exp:"3rd party bankruptcy doesn't terminate. Methods: consent, revocation, renunciation, completion, notice, operation of law (death, incapacity, frustration)." },
+  { topic:"Partner/Agency", q:"What is the 3rd party's remedy if an agent exceeds their authority?", options:["Sue the principal","Sue the agent for breach of warranty of authority","No remedy","Sue Companies House"], correct:1, exp:"Sue the AGENT for breach of warranty of authority - principal isn't bound by an unauthorised contract." },
+  { topic:"Partner/Agency", q:"A 'general agent' is:", options:["An agent for any purpose","An agent acting in the ordinary course of business","An agent without authority","An agent with no principal"], correct:1, exp:"General agent acts in ordinary course of business. Special agent acts for specific purpose only." },
+  { topic:"Finance", q:"Preference share dividends are:", options:["Variable based on profits","Fixed and cumulative","Always 5%","Only paid every 3 years"], correct:1, exp:"Preference = FIXED and CUMULATIVE (unpaid years roll over). Ordinary = variable, not cumulative." },
+  { topic:"Finance", q:"What is AUTHORISED share capital?", options:["The amount actually issued","The maximum amount of capital a company is allowed to issue","Capital paid up by shareholders","Capital owed by shareholders"], correct:1, exp:"Authorised = MAXIMUM allowed to issue. Issued = actually issued. Paid up = actually paid by shareholders." },
+  { topic:"Finance", q:"A debenture is best defined as:", options:["A type of share","A document creating or acknowledging a debt","A government bond","Loan capital from a bank"], correct:1, exp:"Debenture = document creating or acknowledging a debt (Levy v Abercorris Slate). It states principal sum, interest, and security." },
+  { topic:"Finance", q:"A FIXED charge attaches to:", options:["A class of changing assets","A specific identifiable fixed asset","Future earnings","Employee wages"], correct:1, exp:"Fixed charge = specific identifiable asset (land, machinery). Borrower can't sell without consent. Most powerful." },
+  { topic:"Finance", q:"A FLOATING charge attaches to:", options:["A specific machine","A class of assets that changes (e.g. stock, book debts)","Land only","Cash deposits only"], correct:1, exp:"Floating = class of assets (stock, book debts). Borrower can deal with assets freely until crystallisation." },
+  { topic:"Finance", q:"A floating charge crystallises (becomes fixed) when:", options:["The borrower asks","On the company's incorporation","On default, liquidation, appointment of receiver, or end of business","After 5 years automatically"], correct:2, exp:"Crystallisation triggers: default, winding up, appointment of liquidator/receiver, notice, end of business." },
+  { topic:"Finance", q:"In a company liquidation, who gets paid FIRST?", options:["Ordinary shareholders","Unsecured creditors","Fixed charge holders","Preference shareholders"], correct:2, exp:"Order: (1) Liquidator's fees, (2) Fixed charges, (3) Preferential debts (employees), (4) Floating charges, (5) Unsecured, (6) Shareholders." },
+  { topic:"Finance", q:"Which TWO statements are CORRECT? (1) Preference dividends are presumed cumulative (2) Ordinary shares have no voting rights (3) Authorised capital is the maximum a company can issue (4) Preference shares carry the most risk", options:["(1) and (2)","(1) and (3)","(2) and (4)","(3) and (4)"], correct:1, exp:"(1) Preference IS cumulative. (3) Authorised IS the maximum. (2) is wrong - ordinary HAVE votes. (4) is wrong - ORDINARY carry most risk." },
+  { topic:"Admin/Liq", q:"The two main purposes of administration are:", options:["Punish directors and pay shareholders","Enable company survival and achieve better result for creditors","Wind up company quickly","Replace the auditor"], correct:1, exp:"Purpose: (1) enable survival/continued trading, (2) better result for creditors than liquidation." },
+  { topic:"Admin/Liq", q:"Who can appoint an administrator?", options:["Only the court","Only the directors","Members (ordinary res), directors, or creditor (via court)","Only Companies House"], correct:2, exp:"3 routes: members (ordinary resolution), directors, or creditor (via court application)." },
+  { topic:"Admin/Liq", q:"An administrator must call a meeting with creditors within:", options:["1 week","4 weeks","10 weeks","6 months"], correct:2, exp:"10 weeks of appointment - and give creditors a copy of proposals." },
+  { topic:"Admin/Liq", q:"The administration moratorium initially lasts how long?", options:["3 months","6 months","12 months (extendable by 6)","24 months"], correct:2, exp:"12 months initial + further 6 months extension with court/creditor approval." },
+  { topic:"Admin/Liq", q:"During administration, the company:", options:["Is automatically wound up","Becomes 'protected' - no legal proceedings, no winding up","Loses limited liability","Must change name"], correct:1, exp:"Company becomes 'protected' - moratorium. No winding up, no legal proceedings by creditors." },
+  { topic:"Admin/Liq", q:"In a MEMBERS' Voluntary Winding Up, the company must be:", options:["Insolvent","Solvent (with declaration of solvency)","Either - it doesn't matter","A public company"], correct:1, exp:"MUST be solvent. Directors must swear declaration of solvency within 5 weeks of GM." },
+  { topic:"Admin/Liq", q:"A CREDITORS' Voluntary Winding Up commences when:", options:["The petition is presented to court","The resolution is passed at the general meeting","Companies House is notified","The liquidator is appointed"], correct:1, exp:"Commences when the resolution is passed at the GM. NOT when petition presented (that's compulsory)." },
+  { topic:"Admin/Liq", q:"For COMPULSORY winding up, a creditor must show debt over what amount unpaid for what period?", options:["GBP500 for 1 week","GBP750 for 3 weeks","GBP1000 for 1 month","GBP5000 for 3 months"], correct:1, exp:"GBP750 unpaid for 3 weeks after demand served = grounds for compulsory winding up petition." },
+  { topic:"Admin/Liq", q:"During COMPULSORY winding up (NOT administration), employees are:", options:["Retained","Automatically dismissed","Promoted","Given new contracts"], correct:1, exp:"Compulsory winding up = employees automatically dismissed. Administration does NOT dismiss employees." },
+  { topic:"Admin/Liq", q:"In a Members' Voluntary Winding Up, who appoints the liquidator?", options:["The court","The members","The creditors","Companies House"], correct:1, exp:"Members appoint in Members' voluntary. Creditors appoint in Creditors' voluntary. Court appoints in Compulsory. (The first word tells you who!)" },
+  { topic:"Admin/Liq", q:"True or False: Administration aims at company survival, but if unsuccessful, the company goes into liquidation.", options:["True","False"], correct:0, exp:"TRUE. Administration = one last chance at survival. If fails -> liquidation." },
+  { topic:"Admin/Liq", q:"Which is NOT a power of an administrator?", options:["Manage affairs and property","Dispose of company property","Bring and defend legal action","Personally take ownership of company assets"], correct:3, exp:"Administrator manages, disposes, sues/defends, removes/appoints directors. Cannot take ownership personally - that's fraud." },
+  { topic:"Contract", q:"An exemption clause is best defined as:", options:["A clause guaranteeing performance","A clause that attempts to exempt or restrict liability for breach","A penalty clause","A force majeure clause"], correct:1, exp:"Exemption clause = attempt to exempt (exclusion) or restrict (restriction) liability for breach of contract." },
+  { topic:"Contract", q:"The 'contra proferentem' rule means:", options:["Contract terms are read literally","Ambiguous clauses are interpreted AGAINST the party who drafted them","The seller wins ties","Contracts must be in writing"], correct:1, exp:"Ambiguous exemption clauses interpreted AGAINST the party seeking to rely on them. Used to limit scope of unclear exclusions." },
+  { topic:"Contract", q:"Carlill v Carbolic Smoke Ball Co (1893) established:", options:["The postal rule","Unilateral contracts can be created via advertisement","Counter-offers terminate offers","Past consideration is valid"], correct:1, exp:"Drug company's GBP100 reward ad was a unilateral offer to the world. The deposit of money in the bank showed clear intention." },
+  { topic:"Contract", q:"The 'postal rule' (Adams v Lindsell 1818) holds that an acceptance by post is effective:", options:["When the letter arrives","When the letter is posted","When the offeror reads it","Never - only verbal works"], correct:1, exp:"Acceptance complete and effective as soon as the letter is posted, even if it never arrives (if postal use was contemplated by both parties)." },
+  { topic:"Contract", q:"Hyde v Wrench (1840) established that a counter-offer:", options:["Is a valid acceptance","Terminates the original offer","Has no legal effect","Must be in writing"], correct:1, exp:"A counter-offer rejects and terminates the original offer. The original offeror can then accept or reject the new counter-offer." },
+  { topic:"Contract", q:"A 'condition' in a contract is:", options:["A minor term","A core/essential term - breach allows repudiation","Always written, never oral","Only enforceable by court"], correct:1, exp:"Condition = essential term. Breach of condition = right to repudiate (terminate). Poussard v Spiers - singer fell ill = condition." },
+  { topic:"Contract", q:"A 'warranty' in a contract is:", options:["A core term","A minor term - breach gives damages but NOT right to repudiate","Always void","A type of guarantee on goods"], correct:1, exp:"Warranty = minor term. Bettini v Gye - missing rehearsals was a warranty only, no right to repudiate." },
+  { topic:"Contract", q:"Taylor v Caldwell (1863) - music hall destroyed by fire - established the doctrine of:", options:["Mistake","Frustration","Misrepresentation","Unconscionable bargain"], correct:1, exp:"Frustration - an unforeseeable event making the contract impossible to perform. Discharges both parties from further obligations." },
+  { topic:"Insider Dealing", q:"How many offences of insider dealing exist under s.52 of the Criminal Justice Act 1993?", options:["1","2","3","5"], correct:2, exp:"3 offences: (1) dealing in price-affected securities, (2) encouraging others to deal, (3) disclosing inside information." },
+  { topic:"Insider Dealing", q:"Maximum prison sentence for insider dealing on indictment:", options:["2 years","5 years","10 years","Life"], correct:2, exp:"Up to 10 years imprisonment AND/OR an unlimited fine on indictment." },
+  { topic:"Insider Dealing", q:"Which is NOT a defence to insider dealing?", options:["Did not expect to make a profit or avoid a loss","Believed the information was already disclosed widely","Would have done what they did anyway","The amount was small"], correct:3, exp:"Amount is not a defence. Defences: no expected profit, believed info disclosed, would have acted anyway." },
+  { topic:"Insider Dealing", q:"Which statute primarily criminalises money laundering?", options:["Theft Act 1968","Proceeds of Crime Act 2002","Fraud Act 2006","Companies Act 2006"], correct:1, exp:"POCA 2002. 15 years max for laundering, 5 years for failure to report/tipping off." },
+  { topic:"Scenarios", q:"Sarah is dismissed after 8 months service because she is pregnant. Her BEST legal claim is:", options:["No claim - insufficient service (under 1 year)","Unfair dismissal - automatic (no service requirement)","Wrongful dismissal","Constructive dismissal"], correct:1, exp:"Pregnancy is AUTOMATICALLY unfair - bypasses the 1-year service rule. The grounds in the (NI) Order 1996 don't require service." },
+  { topic:"Scenarios", q:"Dalton's car is damaged by a hotel valet. The valet handed him a parking ticket with an exemption clause AFTER taking the car. Is the clause incorporated?", options:["Yes - by signature","Yes - by reasonable notice","No - not brought to attention before/at contract formation","Yes - by course of dealing"], correct:2, exp:"Clause must be incorporated BEFORE or AT contract formation. Ticket given AFTER = not incorporated. Like Olley v Marlborough Court." },
+  { topic:"Scenarios", q:"Tom acts as agent for Acme Ltd. He signs a contract worth GBP50,000 but his authority is capped at GBP20,000. Acme refuses to honour the deal. Who can the 3rd party sue?", options:["Acme Ltd only","Tom personally for breach of warranty of authority","Both Acme and Tom","Companies House"], correct:1, exp:"Tom exceeded actual/apparent authority -> personally liable to 3rd party for breach of warranty of authority. Acme is NOT bound (not a party to an unauthorised contract)." },
+  { topic:"Scenarios", q:"Madison is suing for personal injury valued at GBP27,000. Which court has jurisdiction?", options:["Magistrates' Court","County Court (handles tort up to GBP30,000)","High Court","Crown Court"], correct:1, exp:"County Court handles tort and contract actions up to GBP30,000. High Court above. Magistrates' is criminal." },
+  { topic:"Scenarios", q:"A director knowingly continues trading when the company is insolvent, ignoring warnings. The company goes into liquidation. Which offence applies?", options:["Insider dealing","Wrongful trading","Money laundering","Fraudulent trading"], correct:1, exp:"Wrongful trading - director knew/should have known no reasonable prospect of avoiding insolvent liquidation. Only liquidator can sue. Civil sanctions + disqualification up to 15 years." },
+  { topic:"Scenarios", q:"Lottie receives 2 unwanted phone calls per day for 2 months despite asking to be removed from a marketing list. Is this an aggressive practice?", options:["No - just standard marketing","Yes - refusal to cease unwanted communication","No - she gave initial consent","Only if she lost money"], correct:1, exp:"YES - aggressive practice under Consumer Protection from Unfair Trading Regs 2008. Refusal to comply with cease requests = aggressive tactics." },
+  { topic:"Scenarios", q:"A telecoms company needs to make 10 employees in customer service redundant. Which is a FAIR selection criterion?", options:["Random selection","Age (oldest first)","Last In First Out (LIFO)","Friends of management"], correct:2, exp:"Fair criteria: LIFO, skills, productivity, attendance (non-discriminatory), disciplinary records, length of service. Age would be discrimination." },
+  { topic:"Scenarios", q:"Company X registered 10 May 2024. Its first ARD is 31 May 2025. The latest filing date for a PRIVATE company is:", options:["31 May 2025","30 November 2025","28 February 2026","31 May 2026"], correct:2, exp:"Private = 9 months after ARD. 31 May 2025 + 9 months = 28 February 2026. (Public would be 30 November 2025 - 6 months.)" },
+  { topic:"Scenarios", q:"Which TWO are correct? (1) First auditor appointed by directors (2) First auditor appointed by shareholders (3) Auditor removed by ordinary resolution + special notice (4) Auditor removed by special resolution + special notice", options:["(1) and (3)","(1) and (4)","(2) and (3)","(2) and (4)"], correct:0, exp:"(1) Directors appoint first auditor. (3) Removal = ORDINARY resolution + 28-day special notice. Subsequent auditors appointed by shareholders." },
+  { topic:"Scenarios", q:"On a liquidation, in what order are these paid? (A) Fixed charge GBP100k (B) Unsecured creditor GBP30k (C) Statutory redundancy GBP50k (D) Floating charge GBP40k", options:["A, B, C, D","A, C, D, B","B, A, C, D","D, C, A, B"], correct:1, exp:"Order: Fixed (A) -> Preferential debts incl statutory redundancy (C) -> Floating (D) -> Unsecured (B). MEMORISE: 'Liquidator -> Fixed -> Pref -> Float -> Unsec'." },
 ];
-
-let state = {
-  filter: 'All',
-  queue: [],
-  currentIdx: 0,
-  answered: 0,
-  correct: 0,
-  streak: 0,
-  missed: 0,
-  seenIds: new Set(),
-};
-
-const TOPICS = ['All', 'Employment', 'Data Protection', 'Business Orgs', 'Directors', 'Auditors', 'Key Acts'];
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function buildQueue() {
-  let pool = state.filter === 'All' ? QUESTIONS : QUESTIONS.filter(q => q.topic === state.filter);
-  state.queue = shuffle(pool);
-  state.currentIdx = 0;
-}
-
-function reshuffleQueue() {
-  buildQueue();
-  renderQuestion();
-}
-
-function resetSession() {
-  state = { filter: state.filter, queue: [], currentIdx: 0, answered: 0, correct: 0, streak: 0, missed: 0, seenIds: new Set() };
-  buildQueue();
-  renderAll();
-}
-
-function renderChips() {
-  const wrap = document.getElementById('topicChips');
-  wrap.innerHTML = '';
-  TOPICS.forEach(t => {
-    const el = document.createElement('div');
-    el.className = 'chip' + (state.filter === t ? ' active' : '');
-    el.textContent = t;
-    el.onclick = () => {
-      state.filter = t;
-      buildQueue();
-      renderAll();
-    };
-    wrap.appendChild(el);
-  });
-}
-
-function renderQuestion() {
-  const area = document.getElementById('quizArea');
-  if (state.queue.length === 0) {
-    area.innerHTML = '<div class="card"><div class="question">No questions in this topic yet.</div></div>';
-    return;
-  }
-  if (state.currentIdx >= state.queue.length) {
-    const pct = state.answered ? Math.round(state.correct / state.answered * 100) : 0;
-    area.innerHTML = `<div class="card complete">
-      <h2>Set complete</h2>
-      <div class="big-num">${state.correct}/${state.answered}</div>
-      <p>${pct}% in this run</p>
-      <p style="margin-top:16px;font-size:13px;color:#8b95b0;">Streak: ${state.streak} - Missed: ${state.missed}</p>
-      <button class="next-btn" style="margin-top:24px;max-width:240px;margin-left:auto;margin-right:auto;" onclick="reshuffleQueue()">Reshuffle and Go Again</button>
-    </div>`;
-    return;
-  }
-  const q = state.queue[state.currentIdx];
-  const letters = ['A','B','C','D'];
-  area.innerHTML = `
-    <div class="card">
-      <div class="topic-label">${q.topic}</div>
-      <div class="question">${q.q}</div>
-      <div class="options" id="options">
-        ${q.options.map((o, i) => `<button class="option" onclick="answer(${i})"><span class="letter">${letters[i]}</span><span>${o}</span></button>`).join('')}
-      </div>
-      <div class="feedback" id="feedback"></div>
-      <button class="next-btn" id="nextBtn" disabled onclick="next()">Next</button>
-    </div>
-  `;
-}
-
-function answer(idx) {
-  const q = state.queue[state.currentIdx];
-  const opts = document.querySelectorAll('.option');
-  opts.forEach((o, i) => {
-    o.classList.add('disabled');
-    if (i === q.correct) o.classList.add('correct');
-    if (i === idx && i !== q.correct) o.classList.add('wrong');
-  });
-  const isCorrect = idx === q.correct;
-  state.answered++;
-  if (isCorrect) {
-    state.correct++;
-    state.streak++;
-  } else {
-    state.streak = 0;
-    state.missed++;
-  }
-  state.seenIds.add(q.q);
-
-  const fb = document.getElementById('feedback');
-  fb.className = 'feedback show' + (isCorrect ? '' : ' wrong-feedback');
-  fb.innerHTML = `<strong>${isCorrect ? 'Correct' : 'Wrong - correct is ' + ['A','B','C','D'][q.correct]}.</strong> ${q.exp}`;
-  document.getElementById('nextBtn').disabled = false;
-  renderStats();
-}
-
-function next() {
-  state.currentIdx++;
-  renderQuestion();
-}
-
-function renderStats() {
-  document.getElementById('scoreNum').textContent = state.correct + '/' + state.answered;
-  document.getElementById('scorePct').textContent = state.answered ? Math.round(state.correct / state.answered * 100) + '%' : '—';
-  document.getElementById('streakNum').textContent = state.streak;
-  document.getElementById('seenNum').textContent = state.answered;
-  document.getElementById('missedNum').textContent = state.missed;
-}
-
-function renderAll() {
-  renderChips();
-  renderQuestion();
-  renderStats();
-}
-
-buildQueue();
-renderAll();
+let state = { filter: 'All', queue: [], currentIdx: 0, answered: 0, correct: 0, streak: 0, missed: 0, seenIds: new Set() };
+const TOPICS = ['All','Employment','Data Protection','Business Orgs','Directors','Auditors','Key Acts','Partner/Agency','Finance','Admin/Liq','Contract','Insider Dealing','Scenarios'];
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildQueue(){let pool=state.filter==='All'?QUESTIONS:QUESTIONS.filter(q=>q.topic===state.filter);state.queue=shuffle(pool);state.currentIdx=0;}
+function reshuffleQueue(){buildQueue();renderQuestion();}
+function resetSession(){state={filter:state.filter,queue:[],currentIdx:0,answered:0,correct:0,streak:0,missed:0,seenIds:new Set()};buildQueue();renderAll();}
+function renderChips(){const wrap=document.getElementById('topicChips');wrap.innerHTML='';TOPICS.forEach(t=>{const el=document.createElement('div');el.className='chip'+(state.filter===t?' active':'');el.textContent=t;el.onclick=()=>{state.filter=t;buildQueue();renderAll();};wrap.appendChild(el);});}
+function renderQuestion(){const area=document.getElementById('quizArea');if(state.queue.length===0){area.innerHTML='<div class="card"><div class="question">No questions in this topic yet.</div></div>';return;}if(state.currentIdx>=state.queue.length){const pct=state.answered?Math.round(state.correct/state.answered*100):0;area.innerHTML=`<div class="card complete"><h2>Set complete</h2><div class="big-num">${state.correct}/${state.answered}</div><p>${pct}% in this run</p><p style="margin-top:16px;font-size:13px;color:#8b95b0;">Streak: ${state.streak} - Missed: ${state.missed}</p><button class="next-btn" style="margin-top:24px;max-width:240px;margin-left:auto;margin-right:auto;" onclick="reshuffleQueue()">Reshuffle and Go Again</button></div>`;return;}const q=state.queue[state.currentIdx];const letters=['A','B','C','D'];const isScenario=q.topic==='Scenarios';area.innerHTML=`<div class="card"><div class="topic-label ${isScenario?'scenario':''}">${q.topic}</div><div class="question">${q.q}</div><div class="options" id="options">${q.options.map((o,i)=>`<button class="option" onclick="answer(${i})"><span class="letter">${letters[i]}</span><span>${o}</span></button>`).join('')}</div><div class="feedback" id="feedback"></div><button class="next-btn" id="nextBtn" disabled onclick="next()">Next</button></div>`;}
+function answer(idx){const q=state.queue[state.currentIdx];const opts=document.querySelectorAll('.option');opts.forEach((o,i)=>{o.classList.add('disabled');if(i===q.correct)o.classList.add('correct');if(i===idx&&i!==q.correct)o.classList.add('wrong');});const isCorrect=idx===q.correct;state.answered++;if(isCorrect){state.correct++;state.streak++;}else{state.streak=0;state.missed++;}state.seenIds.add(q.q);const fb=document.getElementById('feedback');fb.className='feedback show'+(isCorrect?'':' wrong-feedback');fb.innerHTML=`<strong>${isCorrect?'Correct':'Wrong - correct is '+['A','B','C','D'][q.correct]}.</strong> ${q.exp}`;document.getElementById('nextBtn').disabled=false;renderStats();}
+function next(){state.currentIdx++;renderQuestion();}
+function renderStats(){document.getElementById('scoreNum').textContent=state.correct+'/'+state.answered;document.getElementById('scorePct').textContent=state.answered?Math.round(state.correct/state.answered*100)+'%':'-';document.getElementById('streakNum').textContent=state.streak;document.getElementById('seenNum').textContent=state.answered;document.getElementById('missedNum').textContent=state.missed;}
+function renderAll(){renderChips();renderQuestion();renderStats();}
+buildQueue();renderAll();
 </script>
 </body>
 </html>
